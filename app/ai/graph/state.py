@@ -6,13 +6,16 @@ class GraphState(TypedDict):
     Represents the state of our graph.
 
     Attributes:
-        question: question
         user_id: user id
+        conversation_id: conversation id
+        transaction_id: transaction id
+        question: question
         generation: LLM generation
         documents: list of documents
     """
-
-    question: str
     user_id: str
+    conversation_id: str
+    transaction_id: str
+    question: str
     generation: str
     documents: List[Any]

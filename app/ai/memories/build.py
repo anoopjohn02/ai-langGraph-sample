@@ -9,9 +9,10 @@ from langchain.memory import (
 
 from app.models.chat import ChatArgs
 from .histories import SqlMessageHistory
+from ..graph.state import GraphState
 
 
-def build_memory(chat_args: ChatArgs):
+def build_memory(state: GraphState):
     """
     Build Conversation Buffer Memory
     Args:
@@ -19,15 +20,15 @@ def build_memory(chat_args: ChatArgs):
     """
     return ConversationBufferMemory(
         chat_memory=SqlMessageHistory(
-            conversation_id = chat_args.conversation_id,
-            transaction_id = chat_args.transaction_id
+            conversation_id = state["conversation_id"],
+            transaction_id = state["transaction_id"]
         ),
         return_messages=True,
         memory_key="chat_history",
         output_key="output"
     )
 
-def build_window_memory(chat_args):
+def build_window_memory(state: GraphState):
     """
     Build Conversation Buffer Window Memory
     Args:
@@ -35,7 +36,7 @@ def build_window_memory(chat_args):
     """
     return ConversationBufferWindowMemory(
         chat_memory=SqlMessageHistory(
-            conversation_id=chat_args.conversation_id
+            conversation_id=state["conversation_id"]
         ),
         return_messages=True,
         memory_key="chat_history",

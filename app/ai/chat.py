@@ -15,6 +15,7 @@ from app.config import CUSTOM_PROMPT_TEMPLATE, CUSTOM_PROMPT
 from app.models.chat import ChatArgs
 from .handlers import build_token_handler
 from .tools import define_user_token_usage_tool, vector_tool, define_devices_tool
+from .chains.router import build_llm_router
 
 PROMPT = PromptTemplate(
             template=CUSTOM_PROMPT_TEMPLATE,
@@ -31,9 +32,7 @@ prompt = ChatPromptTemplate(
 )
 
 def build_agent(chat_args: ChatArgs):
-    token_handler = build_token_handler(chat_args)
-    handlers = [token_handler]
-    llm = build_llm(chat_args, handlers)
+    llm = build_llm(chat_args)
     memory = build_memory(chat_args)
     tools = [
         define_devices_tool(chat_args.user_id),
@@ -50,3 +49,5 @@ def build_agent(chat_args: ChatArgs):
 
 def get_response(chat_args: ChatArgs):
     logging.info("Question %s", chat_args.query)
+    llm = build_llm(chat_args)
+    router = build_llm_router(llm)

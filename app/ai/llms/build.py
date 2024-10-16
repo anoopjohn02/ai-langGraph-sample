@@ -1,20 +1,21 @@
 """
 LLM Build Module
 """
-from langchain_core.callbacks import BaseCallbackHandler
-
-from app.models.chat import ChatArgs
+from ..graph.state import GraphState
+from ..handlers import build_token_handler
 from .openai import (build_openai_llm,
                      build_openai_condense_llm,
                      calculate_openai_tokens,
                      embeddings)
 
 
-def build_llm(chat_args: ChatArgs, handlers: [BaseCallbackHandler]):
+def build_llm(state: GraphState, streaming: bool):
     """
     Build LLM Function
     """
-    return build_openai_llm(chat_args, handlers)
+    token_handler = build_token_handler(state)
+    handlers = [token_handler]
+    return build_openai_llm(streaming, handlers)
 
 def build_condense_llm():
     """

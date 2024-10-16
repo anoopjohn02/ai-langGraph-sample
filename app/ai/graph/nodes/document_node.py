@@ -4,7 +4,7 @@ from ..state import GraphState
 from app.data.vector import build_retriever
 
 
-def retrieve_node(state: GraphState) -> Dict[str, Any]:
+def retrieve_document_node(state: GraphState) -> Dict[str, Any]:
     """
     Vector retriever node
     """
