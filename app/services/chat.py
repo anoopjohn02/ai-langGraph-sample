@@ -3,7 +3,7 @@ Chat service module
 """
 import uuid
 
-from app.ai import get_Response
+from app.ai import get_response
 from app.models.chat import ChatArgs, Request
 from app.models.user import LoggedInUser
 from .conversation import get_default_user_conversation, create_new_user_conversation
@@ -23,7 +23,7 @@ class ChatService:
         else:
             conversation_id = get_default_user_conversation(user.id)
         chat_args = ChatArgs(user.id, request.question, conversation_id, uuid.uuid1(), True)
-        get_Response(chat_args)
+        get_response(chat_args)
         return None
 
     async def fake_data(self):

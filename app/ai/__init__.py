@@ -1,5 +1,5 @@
 """
 AI package
 """
-from .chat import get_Response
+from .chat import get_response
 

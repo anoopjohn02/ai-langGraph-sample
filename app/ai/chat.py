@@ -48,5 +48,5 @@ def build_agent(chat_args: ChatArgs):
         memory=memory
     )
 
-def get_Response(chat_args: ChatArgs):
+def get_response(chat_args: ChatArgs):
     logging.info("Question %s", chat_args.query)
