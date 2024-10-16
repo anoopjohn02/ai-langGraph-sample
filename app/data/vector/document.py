@@ -13,10 +13,8 @@ from langchain_community.document_loaders import PyPDFLoader
 from app.ai.llms import EMBEDDING_MODEL
 from app.config import OpenaiConfig
 from app.config import PDF_DIRECTORY
-from app.data import (DocumentEmbedding,
-                      DocumentEmbeddingFiles,
-                      DocumentEmbeddingRepo,
-                      DocumentEmbeddingFilesRepo)
+from app.data.sql.entities import DocumentEmbedding,DocumentEmbeddingFiles
+from app.data.sql.repo import DocumentEmbeddingRepo, DocumentEmbeddingFilesRepo
 from . import build_vector_store
 
 logging.basicConfig(level=logging.INFO)
@@ -86,4 +84,4 @@ def process_documents(chunk_size = 1000, chunk_overlap = 200):
             document_embeddings.files.append(embedding_file)
 
     embedding_repo.save_embeddings(document_embeddings)
-    logging.info("Embedding proccessing completed")
+    logging.info("Embedding processing completed")

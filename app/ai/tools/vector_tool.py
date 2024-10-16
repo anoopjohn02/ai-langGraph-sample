@@ -1,6 +1,6 @@
 from langchain_core.tools import tool
 
-from app.ai.vectors import build_retriever
+from app.data.vector import build_retriever
 
 
 @tool

@@ -44,8 +44,8 @@ class TestController(Controller):
         service = ChatService()
         logging.info("New chat = %s", request.new_chat)
         logging.info("User %s asked question: %s", user.first_name, request.question)
-        agent = service.create_agent(request, user)
-        return StreamingResponse(agent.stream({request.question}), media_type='text/event-stream')
+        service.answer(request, user)
+        return StreamingResponse(service.fake_data(), media_type='text/event-stream')
 
     @post("/devices")
     async def save_devices(self, devices: List[DeviceDto]):

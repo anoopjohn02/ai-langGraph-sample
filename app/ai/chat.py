@@ -2,6 +2,7 @@
 Chat Module
 """
 
+import logging
 from langchain.agents import OpenAIFunctionsAgent
 from langchain.prompts import (PromptTemplate, ChatPromptTemplate,
                                HumanMessagePromptTemplate, MessagesPlaceholder)
@@ -46,3 +47,6 @@ def build_agent(chat_args: ChatArgs):
         tools=tools,
         memory=memory
     )
+
+def get_Response(chat_args: ChatArgs):
+    logging.info("Question %s", chat_args.query)

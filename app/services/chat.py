@@ -3,7 +3,7 @@ Chat service module
 """
 import uuid
 
-from app.ai import build_agent
+from app.ai import get_Response
 from app.models.chat import ChatArgs, Request
 from app.models.user import LoggedInUser
 from .conversation import get_default_user_conversation, create_new_user_conversation
@@ -14,7 +14,7 @@ class ChatService:
     Chat service class
     """
 
-    def create_agent(self, request: Request, user: LoggedInUser):
+    def answer(self, request: Request, user: LoggedInUser):
         """
         Create agent
         """
@@ -23,4 +23,9 @@ class ChatService:
         else:
             conversation_id = get_default_user_conversation(user.id)
         chat_args = ChatArgs(user.id, request.question, conversation_id, uuid.uuid1(), True)
-        return build_agent(chat_args)
+        get_Response(chat_args)
+        return None
+
+    async def fake_data(self):
+        for i in range(10):
+            yield f"some fake data {i} <br>"
