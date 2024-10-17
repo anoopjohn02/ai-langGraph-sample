@@ -1,7 +1,7 @@
 from typing import Any, Dict
 
-from ..state import GraphState
 from app.data.vector import build_retriever
+from ..state import GraphState
 
 
 def retrieve_document_node(state: GraphState) -> Dict[str, Any]:

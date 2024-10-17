@@ -1,18 +1,21 @@
 from typing import Any, Dict
-from langchain.prompts import (PromptTemplate, ChatPromptTemplate,
+
+from langchain.prompts import (ChatPromptTemplate,
                                HumanMessagePromptTemplate, MessagesPlaceholder)
 from langchain.schema import SystemMessage
 from langchain_core.output_parsers import StrOutputParser
-from app.config import CUSTOM_PROMPT
+
+from app.config import CUSTOM_PROMPT_TEMPLATE
 from ..state import GraphState
 from ...llms import build_llm
+from ...memories import build_memory
 
 prompt = ChatPromptTemplate(
     messages=[
-        SystemMessage(content=CUSTOM_PROMPT),
-        MessagesPlaceholder(variable_name="chat_history"),
+        SystemMessage(content=CUSTOM_PROMPT_TEMPLATE),
+        MessagesPlaceholder(variable_name="context"),
         MessagesPlaceholder(variable_name="agent_scratchpad"),
-        HumanMessagePromptTemplate.from_template("{input}")
+        HumanMessagePromptTemplate.from_template("{question}")
     ]
 )
 
@@ -22,6 +25,7 @@ def generate_output_node(state: GraphState) -> Dict[str, Any]:
     documents = state["documents"]
 
     llm = build_llm(state, True)
-    generation_chain = prompt | llm | StrOutputParser()
+    memory = build_memory(state)
+    generation_chain = memory | prompt | llm | StrOutputParser()
     generation = generation_chain.invoke({"context": documents, "question": question})
     return {"documents": documents, "question": question, "generation": generation}

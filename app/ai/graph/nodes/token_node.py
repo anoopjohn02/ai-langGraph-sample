@@ -2,11 +2,12 @@
 import logging
 import uuid
 from typing import Any, Dict, List
-from ..state import GraphState
 
 from app.models.token import TotalTokenUsage
 from app.models.user import TokenUser
 from app.services.token_usage import get_user_message_token_usage
+from ..state import GraphState
+
 
 def token_usage_node(state: GraphState) -> Dict[str, Any]:
     user_id = state["user_id"]

@@ -13,7 +13,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from app.ai.llms import EMBEDDING_MODEL
 from app.config import OpenaiConfig
 from app.config import PDF_DIRECTORY
-from app.data.sql.entities import DocumentEmbedding,DocumentEmbeddingFiles
+from app.data.sql.entities import DocumentEmbedding, DocumentEmbeddingFiles
 from app.data.sql.repo import DocumentEmbeddingRepo, DocumentEmbeddingFilesRepo
 from . import build_vector_store
 

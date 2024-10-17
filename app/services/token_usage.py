@@ -6,8 +6,8 @@ import uuid
 from typing import List
 
 from app.config.constants import MODEL_COSTS
-from app.data.sql.repo import MessageTokenUsageRepo, DocumentEmbeddingRepo
 from app.data.sql.entities import MessageTokenUsage
+from app.data.sql.repo import MessageTokenUsageRepo, DocumentEmbeddingRepo
 from app.models.token import (TransactionalTokens,
                               TokenUsage,
                               Message,

@@ -5,9 +5,7 @@ import tiktoken
 from langchain_core.callbacks import BaseCallbackHandler
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
-from app.ai.graph.state import GraphState
 from app.config import OpenaiConfig as config
-from app.models.chat import ChatArgs
 
 OPENAI_MODEL_NAME = config.model
 OPENAI_EMBEDDING_MODEL = "text-embedding-ada-002"

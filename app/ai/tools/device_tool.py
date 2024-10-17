@@ -1,6 +1,9 @@
 
-import logging, json
+import json
+import logging
+
 from langchain_core.tools import Tool
+
 from app.services.devices import get_user_devices
 
 

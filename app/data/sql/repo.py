@@ -6,11 +6,11 @@ Repository module
 from sqlalchemy import select
 
 from .entities import (ConversationHistory,
-                      ConversationMessage,
-                      MessageTokenUsage,
-                      DocumentEmbedding,
-                      DocumentEmbeddingFiles,
-                      Devices)
+                       ConversationMessage,
+                       MessageTokenUsage,
+                       DocumentEmbedding,
+                       DocumentEmbeddingFiles,
+                       Devices)
 from .sql_engine import Session
 
 

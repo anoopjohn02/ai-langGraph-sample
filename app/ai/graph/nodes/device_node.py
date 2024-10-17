@@ -1,7 +1,10 @@
-import logging, json
+import json
+import logging
 from typing import Any, Dict
-from ..state import GraphState
+
 from app.services.devices import get_user_devices
+from ..state import GraphState
+
 
 def user_devices_node(state: GraphState) -> Dict[str, Any]:
     user_id = state["user_id"]
