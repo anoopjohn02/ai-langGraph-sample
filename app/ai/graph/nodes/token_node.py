@@ -1,6 +1,6 @@
 
 import logging
-import uuid
+import json
 from typing import Any, Dict, List
 
 from app.models.token import TotalTokenUsage
@@ -11,7 +11,6 @@ from ..state import GraphState
 
 def token_usage_node(state: GraphState) -> Dict[str, Any]:
     user_id = state["user_id"]
-    query = state["question"]
     logging.info("token_usage_query: User with id %s", user_id)
     documents: List[TotalTokenUsage] = []
     for token in get_user_message_token_usage(user_id):
@@ -22,4 +21,5 @@ def token_usage_node(state: GraphState) -> Dict[str, Any]:
             created_on=token.created_on, user=TokenUser(**token.user.__dict__),
             messages=token.messages
         ))
-    return {"documents": documents, "question": query}
+    document_json = json.dumps(documents)
+    return {"documents_json": document_json}

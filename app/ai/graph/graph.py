@@ -47,7 +47,7 @@ workflow.set_conditional_entry_point(
 workflow.add_edge(DOCUMENT, GENERATE)
 workflow.add_edge(TOKEN, GENERATE)
 workflow.add_edge(DEVICES, GENERATE)
+workflow.add_edge(OTHERS, GENERATE)
 workflow.add_edge(GENERATE, END)
-workflow.add_edge(OTHERS, END)
 app = workflow.compile()
 app.get_graph().draw_mermaid_png(output_file_path="graph.png")

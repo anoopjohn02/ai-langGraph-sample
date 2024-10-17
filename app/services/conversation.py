@@ -14,7 +14,7 @@ messageRepo = ConversationMessageRepo()
 
 def get_messages_by_conversation_id(
     conversation_id: uuid,
-) -> AIMessage | HumanMessage | SystemMessage:
+) -> [AIMessage | HumanMessage | SystemMessage]:
     """
     Finds all messages that belong to the given conversation_id
 
@@ -27,11 +27,11 @@ def get_messages_by_conversation_id(
 
 def get_messages_by_transaction_id(
     txn_id: uuid,
-) -> AIMessage | HumanMessage | SystemMessage:
+) -> [AIMessage | HumanMessage | SystemMessage]:
     """
     Finds all messages that belong to the given transaction_id
 
-    :param transaction_id: The id of the transaction
+    :param txn_id: The id of the transaction
 
     :return: A list of messages
     """
@@ -48,6 +48,7 @@ def add_message_to_conversation(
     :param conversation_id: The id of the conversation
     :param role: The role of the message
     :param content: The content of the message
+    :param transaction_id: The id of the transaction
 
     :return: void
     """

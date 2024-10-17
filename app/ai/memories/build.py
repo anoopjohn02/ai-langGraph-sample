@@ -25,7 +25,7 @@ def build_memory(state: GraphState):
         ),
         return_messages=True,
         memory_key="chat_history",
-        output_key="output"
+        output_key="answer"
     )
 
 def build_window_memory(state: GraphState):
