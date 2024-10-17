@@ -21,4 +21,4 @@ prompt = ChatPromptTemplate(
 )
 
 def other_node(state: GraphState) -> Dict[str, Any]:
-    return {"documents": [], "documents_json": ""}
+    return {"documents": []}

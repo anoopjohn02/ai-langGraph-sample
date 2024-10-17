@@ -21,14 +21,10 @@ prompt = ChatPromptTemplate(
 def generate_output_node(state: GraphState) -> Dict[str, Any]:
 
     question = state["question"]
-    documents = state["documents"]
-    if len(documents) > 0:
-        context = documents
-    else:
-        context = state["documents_json"]
+    documents = state.get("documents", [])
 
-    llm = build_llm(state, True)
+    llm = build_llm(state, False)
     memory = build_memory(state)
     chain = prompt | llm | StrOutputParser()
-    answer = chain.invoke({"context": context, "question": question})
+    answer = chain.invoke({"context": documents, "question": question})
     return {"question": question, "answer": answer}

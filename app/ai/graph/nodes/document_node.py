@@ -24,5 +24,6 @@ def retrieve_document_node(state: GraphState) -> Dict[str, Any]:
     """
     question = state["question"]
     retriever = build_retriever()
+    #json.dumps(device.to_dict())
     documents = retriever.invoke(question)
     return {"documents": documents}

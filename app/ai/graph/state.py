@@ -13,7 +13,6 @@ class GraphState(TypedDict):
         question: question from user
         answer: LLM generated answer
         documents: list of documents
-        documents_json: document in json format
     """
     user_id: UUID
     conversation_id: UUID
@@ -21,4 +20,3 @@ class GraphState(TypedDict):
     question: str
     answer: str
     documents: List[str]
-    documents_json: str
