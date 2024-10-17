@@ -7,10 +7,8 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 from app.config import OpenaiConfig as config
 
-OPENAI_MODEL_NAME = config.model
-OPENAI_EMBEDDING_MODEL = "text-embedding-ada-002"
-embeddings = OpenAIEmbeddings(model = OPENAI_EMBEDDING_MODEL)
-encoding = tiktoken.encoding_for_model(OPENAI_EMBEDDING_MODEL)
+embeddings = OpenAIEmbeddings(model = config.EMBEDDING_MODEL)
+encoding = tiktoken.encoding_for_model(config.EMBEDDING_MODEL)
 
 def build_openai_llm(streaming: bool,
                      handlers: [BaseCallbackHandler]):
@@ -22,7 +20,7 @@ def build_openai_llm(streaming: bool,
     """
     return ChatOpenAI(
         streaming=streaming,
-        model_name=OPENAI_MODEL_NAME,
+        model_name=config.MODEL_NAME,
         callbacks=handlers,
     )
 

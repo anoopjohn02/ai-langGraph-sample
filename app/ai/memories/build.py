@@ -16,7 +16,7 @@ def build_memory(state: GraphState):
     """
     Build Conversation Buffer Memory
     Args:
-        chat_args(ChatArgs): Arguments needed for building Conversation Buffer Memory
+        state(GraphState): Arguments needed for building Conversation Buffer Memory
     """
     return ConversationBufferMemory(
         chat_memory=SqlMessageHistory(
@@ -32,11 +32,12 @@ def build_window_memory(state: GraphState):
     """
     Build Conversation Buffer Window Memory
     Args:
-        chat_args(ChatArgs): Arguments needed for building Conversation Buffer Window Memory
+        state(GraphState): Arguments needed for building Conversation Buffer Window Memory
     """
     return ConversationBufferWindowMemory(
         chat_memory=SqlMessageHistory(
-            conversation_id=state["conversation_id"]
+            conversation_id=state["conversation_id"],
+            transaction_id=state["transaction_id"]
         ),
         return_messages=True,
         memory_key="chat_history",
@@ -44,15 +45,16 @@ def build_window_memory(state: GraphState):
         k=2
     )
 
-def build_token_memory(chat_args):
+def build_token_memory(state: GraphState):
     """
     Build Conversation Token Memory
     Args:
-        chat_args(ChatArgs): Arguments needed for building Conversation Token Memory
+        state(GraphState): Arguments needed for building Conversation Token Memory
     """
     return ConversationTokenBufferMemory(
         chat_memory=SqlMessageHistory(
-            conversation_id=chat_args.conversation_id
+            conversation_id=state["conversation_id"],
+            transaction_id=state["transaction_id"]
         ),
         return_messages=True,
         memory_key="chat_history",

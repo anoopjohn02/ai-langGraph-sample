@@ -10,11 +10,11 @@ from ..state import GraphState
 
 
 def token_usage_node(state: GraphState) -> Dict[str, Any]:
-    user_id = state["user_id"]
+    user_id = uuid.UUID(state["user_id"]).hex
     query = state["question"]
     logging.info("token_usage_query: User with id %s", user_id)
     documents: List[TotalTokenUsage] = []
-    for token in get_user_message_token_usage(uuid.UUID(user_id).hex):
+    for token in get_user_message_token_usage(user_id):
         documents.append(TotalTokenUsage(
             model=token.llm_model, tokens=token.prompt_tokens + token.output_tokens,
             cost=token.prompt_cost + token.output_cost + token.embedding_cost,

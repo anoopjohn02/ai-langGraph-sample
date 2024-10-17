@@ -84,8 +84,8 @@ class TransactionalTokens:
 
     def __init__( self, query, conversation_id, transaction_id, model, embedding_model):
         self.query = query
-        self.transaction_id = transaction_id
-        self.conversation_id = conversation_id
+        self.transaction_id = uuid.UUID(transaction_id).hex
+        self.conversation_id = uuid.UUID(conversation_id).hex
         self.model = model
         self.embedding_model = embedding_model
 
