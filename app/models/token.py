@@ -1,6 +1,7 @@
 """
 Costs per transaction
 """
+import json
 import uuid
 from datetime import datetime, timedelta
 from typing import List, Optional
@@ -39,6 +40,11 @@ class Message(BaseModel):
     """
     type: str
     content: str
+    def to_dict(self):
+        return {
+            'type': self.type,
+            'content': self.content,
+        }
 
 class TotalTokenUsage(BaseModel):
     model: str
@@ -48,6 +54,13 @@ class TotalTokenUsage(BaseModel):
     created_on: datetime
     user: Optional[TokenUser] = None
     messages: Optional[List[Message]] = []
+    def to_dict(self):
+        return {
+            'model': self.model,
+            'tokens': self.tokens,
+            'cost': self.cost,
+            'messages': [json.dumps(message.to_dict()) for message in self.messages]
+        }
 
 class TokenUsage(BaseModel):
     """

@@ -1,14 +1,11 @@
 from typing import Any, Dict
 
 from langchain_core.messages import SystemMessage
-from langchain_core.prompts import PromptTemplate, ChatPromptTemplate, MessagesPlaceholder, HumanMessagePromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder, HumanMessagePromptTemplate
 
 from app.config import CUSTOM_PROMPT
 from app.data.vector import build_retriever
 from ..state import GraphState
-from ...chains import StreamingConversationalRetrievalChain
-from ...llms import build_llm, build_condense_llm
-from ...memories import build_memory
 
 prompt = ChatPromptTemplate(
     messages=[
@@ -24,6 +21,6 @@ def retrieve_document_node(state: GraphState) -> Dict[str, Any]:
     """
     question = state["question"]
     retriever = build_retriever()
-    #json.dumps(device.to_dict())
-    documents = retriever.invoke(question)
-    return {"documents": documents}
+    documents = retriever.get_relevant_documents(question)
+    chunks = [doc.page_content for doc in documents]
+    return {"documents": chunks}

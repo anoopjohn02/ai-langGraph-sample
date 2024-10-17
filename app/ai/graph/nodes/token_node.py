@@ -1,6 +1,6 @@
 
-import logging
 import json
+import logging
 from typing import Any, Dict, List
 
 from app.models.token import TotalTokenUsage
@@ -21,5 +21,5 @@ def token_usage_node(state: GraphState) -> Dict[str, Any]:
             created_on=token.created_on, user=TokenUser(**token.user.__dict__),
             messages=token.messages
         )
-        documents.append(json.dumps(usage))
+        documents.append(json.dumps(usage.to_dict()))
     return {"documents": documents}

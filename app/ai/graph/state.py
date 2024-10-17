@@ -1,5 +1,5 @@
+from typing import List, TypedDict
 from uuid import UUID
-from typing import List, TypedDict, Any
 
 
 class GraphState(TypedDict):

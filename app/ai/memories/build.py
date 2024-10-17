@@ -7,7 +7,6 @@ from langchain.memory import (
     ConversationTokenBufferMemory
 )
 
-from app.models.chat import ChatArgs
 from .histories import SqlMessageHistory
 from ..graph.state import GraphState
 
