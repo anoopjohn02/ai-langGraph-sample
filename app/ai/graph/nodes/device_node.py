@@ -8,7 +8,7 @@ from ..state import GraphState
 
 
 def user_devices_node(state: GraphState) -> Dict[str, Any]:
-    user_id = uuid.UUID(state["user_id"]).hex
+    user_id = state["user_id"]
     query = state["question"]
     logging.debug("devices_node: User with id %s", user_id)
     device_dicts = [device.to_dict() for device in get_user_devices(user_id)]

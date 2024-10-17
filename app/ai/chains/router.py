@@ -10,7 +10,7 @@ from app.ai.llms import build_llm
 class RouteQuery(BaseModel):
     """Route a user query to the most relevant datasource."""
 
-    datasource: Literal["vectorstore", "tokens", "devices"] = Field(
+    datasource: Literal["vectorstore", "tokens", "devices", "others"] = Field(
         ...,
         description="Given a user question choose to route it to vectorstore or tokens or devices.",
     )
@@ -34,6 +34,7 @@ def build_llm_router(state: GraphState):
     Use devices for the questions on these topics. For example:
         - How many devices do I have?
         - Which are the devices with type spare parts?
+    If nothing is matching use others.
     """
     route_prompt = ChatPromptTemplate.from_messages(
         [

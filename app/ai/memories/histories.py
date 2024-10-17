@@ -19,8 +19,8 @@ class SqlMessageHistory(BaseChatMessageHistory):
     conversation_id: uuid
     transaction_id: uuid
     def __init__(self, conversation_id, transaction_id) -> None:
-        self.conversation_id = uuid.UUID(conversation_id).hex
-        self.transaction_id = uuid.UUID(transaction_id).hex
+        self.conversation_id = conversation_id
+        self.transaction_id = transaction_id
         super().__init__()
 
     @property

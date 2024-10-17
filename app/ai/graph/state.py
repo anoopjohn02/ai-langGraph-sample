@@ -1,3 +1,4 @@
+from uuid import UUID
 from typing import List, TypedDict, Any
 
 
@@ -13,9 +14,9 @@ class GraphState(TypedDict):
         generation: LLM generation
         documents: list of documents
     """
-    user_id: str
-    conversation_id: str
-    transaction_id: str
+    user_id: UUID
+    conversation_id: UUID
+    transaction_id: UUID
     question: str
     generation: str
-    documents: List[Any]
+    documents: List[str]

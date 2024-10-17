@@ -14,7 +14,6 @@ prompt = ChatPromptTemplate(
     messages=[
         SystemMessage(content=CUSTOM_PROMPT_TEMPLATE),
         MessagesPlaceholder(variable_name="context"),
-        MessagesPlaceholder(variable_name="agent_scratchpad"),
         HumanMessagePromptTemplate.from_template("{question}")
     ]
 )
@@ -26,6 +25,6 @@ def generate_output_node(state: GraphState) -> Dict[str, Any]:
 
     llm = build_llm(state, True)
     memory = build_memory(state)
-    generation_chain = memory | prompt | llm | StrOutputParser()
+    generation_chain = prompt | llm | StrOutputParser()
     generation = generation_chain.invoke({"context": documents, "question": question})
     return {"documents": documents, "question": question, "generation": generation}
