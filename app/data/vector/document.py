@@ -11,7 +11,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 
 from app.config import OpenaiConfig as config
-from app.config import OpenaiConfig
 from app.config import PDF_DIRECTORY
 from app.data.sql.entities import DocumentEmbedding, DocumentEmbeddingFiles
 from app.data.sql.repo import DocumentEmbeddingRepo, DocumentEmbeddingFilesRepo
@@ -45,7 +44,7 @@ def process_documents(chunk_size = 1000, chunk_overlap = 200):
         document_embeddings.embedding_model = config.EMBEDDING_MODEL
         document_embeddings.chunk_size = chunk_size
         document_embeddings.chunk_overlap = chunk_overlap
-        document_embeddings.token_encoding_model = OpenaiConfig.model
+        document_embeddings.token_encoding_model = config.MODEL_NAME
         document_embeddings.files = []
 
     text_splitter = RecursiveCharacterTextSplitter(
