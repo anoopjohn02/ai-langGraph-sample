@@ -4,7 +4,8 @@ Device service module
 import uuid
 from typing import List
 
-from app.data import DeviceRepo, Devices
+from app.data.sql.entities import Devices
+from app.data.sql.repo import DeviceRepo
 from app.models.device import DeviceDto
 from app.models.user import LoggedInUser
 

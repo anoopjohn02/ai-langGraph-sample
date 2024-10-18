@@ -57,6 +57,18 @@ class ConversationMessage(Base):
         else:
             raise Exception(f"Unknown message role: {self.role}")
 
+class ConversationSummary(Base):
+    """
+    Conversation Summary Class
+    """
+    __tablename__ = "conversation_summary"
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True)
+    conversation_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("conversation_history.id"))
+    summary: Mapped[str]
+    created_on = Column(DateTime, default=datetime.utcnow)
+    updated_on = Column(DateTime, default=datetime.utcnow)
+
 class MessageTokenUsage(Base):
     """
     Conversation Message Class

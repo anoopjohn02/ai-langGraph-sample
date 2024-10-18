@@ -3,14 +3,14 @@
 Repository module
 """
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 
 from .entities import (ConversationHistory,
-                      ConversationMessage,
-                      MessageTokenUsage,
-                      DocumentEmbedding,
-                      DocumentEmbeddingFiles,
-                      Devices)
+                       ConversationMessage,
+                       MessageTokenUsage,
+                       DocumentEmbedding,
+                       DocumentEmbeddingFiles,
+                       Devices, ConversationSummary)
 from .sql_engine import Session
 
 
@@ -68,6 +68,39 @@ class ConversationMessageRepo:
         with Session() as session:
             stmt = select(ConversationMessage).where(ConversationMessage.transaction_id == txn_id)
             return session.scalars(stmt).all()
+
+class ConversationSummaryRepo:
+    """
+    Conversation Summary Repo
+    """
+    def save_summary(self, summary : ConversationSummary):
+        """
+        Method to save summary
+        """
+        with Session() as session:
+            session.add(summary)
+            session.commit()
+
+    def get_conversation_summary(self, conv_id):
+        """
+        Method to fetch summary related to given conversation
+        """
+        with Session() as session:
+            stmt = select(ConversationSummary).where(ConversationSummary.conversation_id == conv_id)
+            return session.scalars(stmt).one_or_none()
+
+    def update_conversation_summary(self, conv_id, summary : ConversationSummary):
+        """
+        Method to update summary
+        """
+        with Session() as session:
+            stmt = update(ConversationSummary
+                          ).where(ConversationSummary.conversation_id == conv_id
+                                                     ).values({"summary": summary.summary,
+                                                               "updated_on": summary.updated_on
+                                                               })
+            session.execute(stmt)
+            session.commit()
 
 class MessageTokenUsageRepo:
     """

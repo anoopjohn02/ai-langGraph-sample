@@ -10,13 +10,10 @@ import tiktoken
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 
-from app.ai.llms import EMBEDDING_MODEL
-from app.config import OpenaiConfig
+from app.config import OpenaiConfig as config
 from app.config import PDF_DIRECTORY
-from app.data import (DocumentEmbedding,
-                      DocumentEmbeddingFiles,
-                      DocumentEmbeddingRepo,
-                      DocumentEmbeddingFilesRepo)
+from app.data.sql.entities import DocumentEmbedding, DocumentEmbeddingFiles
+from app.data.sql.repo import DocumentEmbeddingRepo, DocumentEmbeddingFilesRepo
 from . import build_vector_store
 
 logging.basicConfig(level=logging.INFO)
@@ -28,7 +25,7 @@ def calculate_tokens(texts):
     """
     Method to calculate token
     """
-    encoding = tiktoken.encoding_for_model(EMBEDDING_MODEL)
+    encoding = tiktoken.encoding_for_model(config.EMBEDDING_MODEL)
     total_tokens = sum(len(encoding.encode(text.page_content))
                        for text in texts)
     return total_tokens
@@ -44,10 +41,10 @@ def process_documents(chunk_size = 1000, chunk_overlap = 200):
     else:
         document_embeddings = DocumentEmbedding()
         document_embeddings.id = uuid.uuid1()
-        document_embeddings.embedding_model = EMBEDDING_MODEL
+        document_embeddings.embedding_model = config.EMBEDDING_MODEL
         document_embeddings.chunk_size = chunk_size
         document_embeddings.chunk_overlap = chunk_overlap
-        document_embeddings.token_encoding_model = OpenaiConfig.model
+        document_embeddings.token_encoding_model = config.MODEL_NAME
         document_embeddings.files = []
 
     text_splitter = RecursiveCharacterTextSplitter(
@@ -86,4 +83,4 @@ def process_documents(chunk_size = 1000, chunk_overlap = 200):
             document_embeddings.files.append(embedding_file)
 
     embedding_repo.save_embeddings(document_embeddings)
-    logging.info("Embedding proccessing completed")
+    logging.info("Embedding processing completed")

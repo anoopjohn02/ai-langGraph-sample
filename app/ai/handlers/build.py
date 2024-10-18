@@ -1,14 +1,14 @@
-from app.ai.llms import EMBEDDING_MODEL, MODEL_NAME
+from app.config import OpenaiConfig as config
 from .token_handler import TokenAsyncHandler
-from ..llms import calculate_tokens
-from ...models.chat import ChatArgs
+from ..graph.state import GraphState
+from ..llms.tokens import calculate_tokens
 from ...models.token import TransactionalTokens
 
 
-def build_token_handler(chat_args: ChatArgs):
-    token = TransactionalTokens(query=chat_args.query,
-                                transaction_id=chat_args.transaction_id,
-                                conversation_id=chat_args.conversation_id,
-                                model=MODEL_NAME,
-                                embedding_model=EMBEDDING_MODEL)
+def build_token_handler(state: GraphState):
+    token = TransactionalTokens(query=state["question"],
+                                transaction_id=state["transaction_id"],
+                                conversation_id=state["conversation_id"],
+                                model=config.MODEL_NAME,
+                                embedding_model=config.EMBEDDING_MODEL)
     return TokenAsyncHandler(token, calculate_tokens)
