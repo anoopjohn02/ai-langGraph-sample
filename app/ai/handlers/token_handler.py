@@ -26,7 +26,7 @@ class TokenAsyncHandler(AsyncCallbackHandler):
 
     async def on_llm_start( self, serialized: Dict[str, Any],
                            prompts: List[str], **kwargs: Any) -> None:
-        logging.info("LLM Started")
+        logging.debug("LLM Started")
         if self.txn_token == None: return
         if self.calculate_tokens:
             for prompt in prompts:
@@ -39,11 +39,11 @@ class TokenAsyncHandler(AsyncCallbackHandler):
                                   tags: Optional[List[str]] = None,
                                   metadata: Optional[Dict[str, Any]] = None,
                                   **kwargs: Any,) -> Any:
-        logging.info("Chat Model Started")
+        logging.debug("Chat Model Started")
         if self.calculate_tokens:
             for message_list in messages:
                 for message in message_list:
-                    logging.info(f"Prompt sent to LLM: {message.content}")
+                    logging.debug(f"Prompt sent to LLM: {message.content}")
                     self.txn_token.sum_prompt_tokens(self.calculate_tokens(message.content))
         self.txn_token.start_time = datetime.utcnow()
 
@@ -53,6 +53,6 @@ class TokenAsyncHandler(AsyncCallbackHandler):
 
     async def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
         self.txn_token.sum_successful_requests( 1 )
-        logging.info("LLM Ended")
+        logging.debug("LLM Ended")
         self.txn_token.end_time = datetime.utcnow()
         save_message_token_usage(self.txn_token)

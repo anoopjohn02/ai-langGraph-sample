@@ -7,6 +7,7 @@ from app.services.conversation import add_message_to_conversation
 
 
 def save_history_node(state: GraphState) -> Dict[str, Any]:
+    print("---HISTORY NODE---")
     conversation_id = state["conversation_id"]
     transaction_id = state["transaction_id"]
     messages = state.get("messages", [])

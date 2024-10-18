@@ -21,6 +21,6 @@ def retrieve_document_node(state: GraphState) -> Dict[str, Any]:
     """
     question = state["question"]
     retriever = build_retriever()
-    documents = retriever.get_relevant_documents(question)
+    documents = retriever.invoke(question)
     chunks = [doc.page_content for doc in documents]
     return {"documents": chunks}

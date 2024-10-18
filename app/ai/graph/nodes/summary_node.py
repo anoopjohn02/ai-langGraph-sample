@@ -8,6 +8,7 @@ from app.services.conversation import save_conversation_summary
 
 
 def save_summary_node(state: GraphState) -> Dict[str, Any]:
+    print("---SUMMARY NODE---")
     conversation_id = state["conversation_id"]
     summary = state.get("conv_summary", "")
     if summary:

@@ -20,14 +20,15 @@ prompt = ChatPromptTemplate(
     ]
 )
 
-def generate_output_node(state: GraphState) -> Dict[str, Any]:
+async def generate_output_node(state: GraphState) -> Dict[str, Any]:
     question = state["question"]
     conversation_id = state["conversation_id"]
     summary = get_conversation_summary(conversation_id)
     documents = state.get("documents", [])
 
-    llm = build_llm(state, False)
+    llm = build_llm(state, True)
     chain = prompt | llm | StrOutputParser()
-    answer = chain.invoke({"context": documents, "question": question, "chat_history": [summary]})
+    answer = await chain.ainvoke({"context": documents, "question": question, "chat_history": [summary]})
+
     messages = [HumanMessage(content=question), AIMessage(content=answer)]
     return {"question": question, "answer": answer, "conv_summary": summary, "messages": messages}

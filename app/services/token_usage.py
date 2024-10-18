@@ -23,8 +23,8 @@ def save_message_token_usage(txn_token: TransactionalTokens):
     """
     Method to save message token usage
     """
-    logging.info("Saving Transaction: txn_id=%s", txn_token.transaction_id)
-    logging.info("Token usages: prompt_tokens=%s, output_tokens=%s",
+    logging.debug("Saving Transaction: txn_id=%s", txn_token.transaction_id)
+    logging.debug("Token usages: prompt_tokens=%s, output_tokens=%s",
                   txn_token.prompt_tokens, txn_token.output_tokens)
     token_usage = MessageTokenUsage()
     token_usage.id = uuid.uuid1()
@@ -47,7 +47,7 @@ def save_message_token_usage(txn_token: TransactionalTokens):
     embedding_tokens = len(txn_token.query) // 4
     embedding_cost = (embedding_tokens / 1000) * MODEL_COSTS[txn_token.embedding_model]
     token_usage.embedding_cost = format(embedding_cost, '.9f')
-    logging.info("Token costs: prompt_cost=%s, output_cost=%s, embedding_cost=%s",
+    logging.debug("Token costs: prompt_cost=%s, output_cost=%s, embedding_cost=%s",
                   prompt_cost, output_cost, token_usage.embedding_cost)
     messageTokenRepo.save_usage(token_usage)
 

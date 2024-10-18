@@ -3,29 +3,29 @@ Chat service module
 """
 import uuid
 
-from app.ai import get_response
-from app.models.chat import ChatArgs, Request
+from langchain_core.messages import HumanMessage
+
+from app.models.chat import Request
 from app.models.user import LoggedInUser
 from .conversation import get_default_user_conversation, create_new_user_conversation
+from ..ai.graph.consts import GENERATE
+from ..ai.graph.graph import graph
 
-
-class ChatService:
+async def aanswer(request: Request, user: LoggedInUser):
     """
-    Chat service class
+    Answer the user query async
     """
-
-    def answer(self, request: Request, user: LoggedInUser):
-        """
-        Create agent
-        """
-        if request.new_chat:
-            conversation_id = create_new_user_conversation(user.id)
-        else:
-            conversation_id = get_default_user_conversation(user.id)
-        chat_args = ChatArgs(user.id, request.question, conversation_id, uuid.uuid1(), True)
-        get_response(chat_args)
-        return None
-
-    async def fake_data(self):
-        for i in range(10):
-            yield f"some fake data {i} <br>"
+    if request.new_chat:
+        conversation_id = create_new_user_conversation(user.id)
+    else:
+        conversation_id = get_default_user_conversation(user.id)
+    inputs = {
+        "question": request.question,
+        "user_id": user.id,
+        "conversation_id": conversation_id,
+        "transaction_id": uuid.uuid1()
+    }
+    async for msg, metadata in graph.astream(inputs, stream_mode="messages"):
+        if (msg.content and msg.id.startswith("run-") and
+                not isinstance(msg, HumanMessage) and metadata["langgraph_node"] == GENERATE):
+            yield msg.content.replace('\n', '<br>')

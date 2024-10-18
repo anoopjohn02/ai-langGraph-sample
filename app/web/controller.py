@@ -12,7 +12,7 @@ from fastapi_controllers import Controller, get, post
 from app.models.chat import Request
 from app.models.device import DeviceDto
 from app.models.user import LoggedInUser
-from app.services import (ChatService,
+from app.services import (aanswer,
                           get_message_token_usage,
                           get_document_embeddings,
                           get_user_message_token_usage,
@@ -41,11 +41,9 @@ class TestController(Controller):
                     realm_roles= [],
                     client_roles= [],
                     )
-        service = ChatService()
         logging.info("New chat = %s", request.new_chat)
         logging.info("User %s asked question: %s", user.first_name, request.question)
-        service.answer(request, user)
-        return StreamingResponse(service.fake_data(), media_type='text/event-stream')
+        return StreamingResponse(aanswer(request, user), media_type='text/event-stream')
 
     @post("/devices")
     async def save_devices(self, devices: List[DeviceDto]):
@@ -79,10 +77,8 @@ class ChatController(Controller):
         """
         Get the answer for the user input
         """
-        service = ChatService()
-        agent = service.create_agent(request, user)
         logging.info("User %s asked question: %s", user.first_name, request.question)
-        return StreamingResponse(agent.stream({request.question}), media_type='text/event-stream')
+        return StreamingResponse(aanswer(request, user), media_type='text/event-stream')
 
 class TokenUsageController(Controller):
     """
