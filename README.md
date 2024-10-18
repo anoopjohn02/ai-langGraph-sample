@@ -27,15 +27,15 @@ Once you have run the application go to [http://localhost:8080/ui](http://localh
 * Clone the repository
 * Create .env file at root and add the following
 
-| name                   | value                                                           | 
-|------------------------|-----------------------------------------------------------------|
-| DB_CONNECTION_URL      | postgresql+psycopg2://postgres:postgres@localhost:5432/asset360 | 
-| DB_SCHEMA              | ai_assistant                                                    | 
-| KEYCLOAK_AUTH_URL      |                                                                 | 
-| OPENAI_API_KEY         |                                                                 | 
-| OPEN_AI_MODEL          | gpt-3.5-turbo                                                   | 
-| CHROMA_COLLECTION      | ai_collection                                                   | 
-| EUREKA_URL             | <Disabled for time being>                                       | 
+| name                   | value                                                          | 
+|------------------------|----------------------------------------------------------------|
+| DB_CONNECTION_URL      | postgresql+psycopg2://postgres:postgres@localhost:5432/test_db | 
+| DB_SCHEMA              | ai_assistant                                                   | 
+| KEYCLOAK_AUTH_URL      |                                                                | 
+| OPENAI_API_KEY         |                                                                | 
+| OPEN_AI_MODEL          | gpt-3.5-turbo                                                  | 
+| CHROMA_COLLECTION      | ai_collection                                                  | 
+| EUREKA_URL             | <Disabled for time being>                                      | 
 
 ## How do I set up locally? ##
 
