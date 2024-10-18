@@ -1,6 +1,8 @@
 from typing import List, TypedDict
 from uuid import UUID
 
+from langchain_core.messages import BaseMessage
+
 
 class GraphState(TypedDict):
     """
@@ -20,3 +22,5 @@ class GraphState(TypedDict):
     question: str
     answer: str
     documents: List[str]
+    conv_summary: str
+    messages: List[BaseMessage]

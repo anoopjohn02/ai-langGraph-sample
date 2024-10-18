@@ -11,7 +11,7 @@ Once you have run the application go to [http://localhost:8080/ui](http://localh
 ### Libraries used: ###
 
 * LangChain - Language processing
-  * Chains, Agents, and Tools
+  * Chains, LangGraph - State, Graph, edges
 * OpenAI - LLM
 * FastApi - APIs
 * SQLAlchemy - ORM

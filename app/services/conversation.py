@@ -2,15 +2,17 @@
 Conversation module
 """
 import uuid
+from datetime import datetime
 
 from langchain.schema.messages import AIMessage, HumanMessage, SystemMessage
 
-from app.data.sql.entities import ConversationHistory, ConversationMessage
-from app.data.sql.repo import ConversationMessageRepo, ConversationRepo
+from app.data.sql.entities import ConversationHistory, ConversationMessage, ConversationSummary
+from app.data.sql.repo import ConversationMessageRepo, ConversationRepo, ConversationSummaryRepo
 from .exceptions import ServiceException
 
 conversationRepo = ConversationRepo()
 messageRepo = ConversationMessageRepo()
+summaryRepo = ConversationSummaryRepo()
 
 def get_messages_by_conversation_id(
     conversation_id: uuid,
@@ -96,3 +98,23 @@ def get_default_user_conversation(user_id: uuid) -> uuid:
         return conversations[0].id
     else:
         raise ServiceException(f"Unable to find any previous conversation for user {user_id}")
+
+def get_conversation_summary(conversation_id: uuid) -> str:
+    summary = summaryRepo.get_conversation_summary(conversation_id)
+    if summary is None:
+        return ""
+    else:
+        return summary.summary
+
+def save_conversation_summary(conversation_id: uuid, summary : str):
+    summary_ent = summaryRepo.get_conversation_summary(conversation_id)
+    if summary_ent is None:
+        summary_ent = ConversationSummary()
+        summary_ent.id = uuid.uuid1()
+        summary_ent.conversation_id = conversation_id
+        summary_ent.summary = summary
+        summaryRepo.save_summary(summary_ent)
+    else:
+        summary_ent.summary = summary
+        summary_ent.updated_on = datetime.utcnow()
+        summaryRepo.update_conversation_summary(conversation_id, summary_ent)
