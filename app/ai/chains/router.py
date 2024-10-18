@@ -1,6 +1,7 @@
 from typing import Literal
 
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, MessagesPlaceholder
 from langchain_core.pydantic_v1 import BaseModel, Field
 
 from app.ai.graph.state import GraphState
@@ -34,12 +35,15 @@ def build_llm_router(state: GraphState):
     Use devices for the questions on these topics. For example:
         - How many devices do I have?
         - Which are the devices with type spare parts?
-    If nothing is matching use others.
+    If nothing is matching check chat history and find route.
+    If chat history is empty or can't find anything use others.
     """
-    route_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", system),
-            ("human", "{question}"),
+
+    route_prompt = ChatPromptTemplate(
+        messages=[
+            SystemMessage(content=system),
+            MessagesPlaceholder(variable_name="chat_history"),
+            HumanMessagePromptTemplate.from_template("{question}")
         ]
     )
     question_router = route_prompt | structured_llm_router
