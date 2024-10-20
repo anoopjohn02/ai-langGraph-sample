@@ -40,6 +40,20 @@ def get_messages_by_transaction_id(
     messages = messageRepo.get_txn_messages(txn_id)
     return [message.as_lc_message() for message in messages]
 
+def get_last_messages_by_count(
+    conversation_id: uuid, n: int
+) -> [AIMessage | HumanMessage | SystemMessage]:
+    """
+    Finds last n messages that belong to the given conversation_id
+
+    :param conversation_id: The id of the conversation
+    :param n: number of messages
+
+    :return: A list of messages
+    """
+    messages = messageRepo.get_n_conversation_messages(n, conversation_id)
+    return [message.as_lc_message() for message in messages]
+
 def add_message_to_conversation(
     conversation_id: uuid, role: str, content: str, transaction_id: uuid
 ):

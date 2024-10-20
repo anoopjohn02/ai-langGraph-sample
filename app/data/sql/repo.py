@@ -68,6 +68,13 @@ class ConversationMessageRepo:
         with Session() as session:
             stmt = select(ConversationMessage).where(ConversationMessage.transaction_id == txn_id)
             return session.scalars(stmt).all()
+    def get_n_conversation_messages(self, n, conv_id):
+        """
+        Method to fetch last N messages related to given conversation
+        """
+        with Session() as session:
+            stmt = select(ConversationMessage).where(ConversationMessage.conversation_id == conv_id).order_by(ConversationMessage.created_on.desc()).limit(n)
+            return session.scalars(stmt).all()
 
 class ConversationSummaryRepo:
     """

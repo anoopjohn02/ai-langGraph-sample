@@ -1,7 +1,8 @@
 from typing import List, TypedDict, Annotated
 from uuid import UUID
-from langgraph.graph.message import add_messages
+
 from langchain_core.messages import BaseMessage
+from langgraph.graph.message import add_messages
 
 
 class GraphState(TypedDict):
@@ -20,6 +21,7 @@ class GraphState(TypedDict):
     conversation_id: UUID
     transaction_id: UUID
     question: str
+    refined_question: str
     answer: str
     documents: List[str]
     conv_summary: str

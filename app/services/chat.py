@@ -11,6 +11,7 @@ from .conversation import get_default_user_conversation, create_new_user_convers
 from ..ai.graph.consts import GENERATE
 from ..ai.graph.graph import graph
 
+
 async def aanswer(request: Request, user: LoggedInUser):
     """
     Answer the user query async
