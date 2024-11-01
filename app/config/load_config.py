@@ -38,6 +38,12 @@ class OpenaiConfig:
     MODEL_NAME = os.getenv('OPEN_AI_MODEL')
     EMBEDDING_MODEL = "text-embedding-ada-002"
 
+class OllamaConfig:
+    """
+    Store OpenAI specific configurations
+    """
+    MODEL_NAME = os.getenv('OLLAMA_MODEL')
+
 class ChromaConfig:
     """
     Store chroma DB specific configurations
