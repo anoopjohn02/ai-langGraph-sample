@@ -17,7 +17,7 @@ class App:
     APP_NAME = "AIAssistantModule"
     EUREKA_URL = os.getenv('EUREKA_URL')
     PORT = 8080
-    ACCESS_POINT = os.getenv('ACCESS_POINT')
+    MODEL_TYPE = os.getenv('MODEL_TYPE') # openai, ollama
 
 class AuthConfig:
     """

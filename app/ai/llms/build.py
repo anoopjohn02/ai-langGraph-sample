@@ -7,6 +7,7 @@ from .openai import (build_openai_llm,
 from .ollama import build_ollama_llm
 from ..graph.state import GraphState
 from ..handlers.build import build_token_handler
+from app.config.load_config import App
 
 def build_llm(state: GraphState, streaming: bool):
     """
@@ -14,15 +15,10 @@ def build_llm(state: GraphState, streaming: bool):
     """
     token_handler = build_token_handler(state)
     handlers = [token_handler]
-    return build_openai_llm(streaming, handlers)
-
-def build_local_llm(state: GraphState, streaming: bool):
-    """
-    Build local LLM Function
-    """
-    token_handler = build_token_handler(state)
-    handlers = [token_handler]
-    return build_ollama_llm(streaming, handlers)
+    if App.MODEL_TYPE == 'openai':
+        return build_openai_llm(streaming, handlers)
+    elif App.MODEL_TYPE == 'ollama':
+        return build_ollama_llm(streaming, handlers)
 
 def build_condense_llm():
     """
