@@ -17,6 +17,7 @@ class App:
     APP_NAME = "AIAssistantModule"
     EUREKA_URL = os.getenv('EUREKA_URL')
     PORT = 8080
+    ACCESS_POINT = os.getenv('ACCESS_POINT')
 
 class AuthConfig:
     """

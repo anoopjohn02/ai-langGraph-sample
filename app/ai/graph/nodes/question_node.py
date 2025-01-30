@@ -6,7 +6,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder, HumanMessagePromptTemplate
 
 from app.ai.graph.state import GraphState
-from app.ai.llms import build_local_llm
+from app.ai.llms import build_llm
 from app.services.conversation import get_last_messages_by_count
 
 prompt = ChatPromptTemplate(
@@ -27,7 +27,7 @@ def refine_question_node(state: GraphState) -> Dict[str, Any]:
     if len(last_messages) == 0:
         return {"refined_question": question}
 
-    llm = build_local_llm(state, False)
+    llm = build_llm(state, False)
     chain = prompt | llm | StrOutputParser()
     response = chain.invoke({"question": question, "chat_history": last_messages})
     return {"refined_question": response}
