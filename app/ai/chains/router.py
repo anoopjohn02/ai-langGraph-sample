@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplat
 from langchain_core.pydantic_v1 import BaseModel, Field
 
 from app.ai.graph.state import GraphState
-from app.ai.llms import build_llm
+from app.ai.llms import default_llm
 
 
 class RouteQuery(BaseModel):
@@ -17,7 +17,7 @@ class RouteQuery(BaseModel):
     )
 
 def build_llm_router(state: GraphState):
-    llm = build_llm(state, False)
+    llm = default_llm(state, False)
     structured_llm_router = llm.with_structured_output(RouteQuery)
     system = """You are an expert at routing a user question to a vectorstore or tokens or devices.
     The vectorstore contains documents related to spices. Use the vectorstore for the questions on these topics.

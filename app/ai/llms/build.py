@@ -20,6 +20,14 @@ def build_llm(state: GraphState, streaming: bool):
     elif App.MODEL_TYPE == 'ollama':
         return build_ollama_llm(streaming, handlers)
 
+def default_llm(state: GraphState, streaming: bool):
+    """
+    Build LLM for Router
+    """
+    token_handler = build_token_handler(state)
+    handlers = [token_handler]
+    return build_openai_llm(streaming, handlers)
+
 def build_condense_llm():
     """
     Build condense LLM
