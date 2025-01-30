@@ -3,7 +3,7 @@ from typing import Any, Dict
 from langchain_core.messages import HumanMessage
 
 from app.ai.graph.state import GraphState
-from app.ai.llms import build_llm
+from app.ai.llms import build_local_llm
 from app.services.conversation import save_conversation_summary
 
 
@@ -19,7 +19,7 @@ def save_summary_node(state: GraphState) -> Dict[str, Any]:
     else:
         summary_message = "Create a summary of the conversation above:"
 
-    llm = build_llm(state, False)
+    llm = build_local_llm(state, False)
     messages = state["messages"] + [HumanMessage(content=summary_message)]
     response = llm.invoke(messages)
     save_conversation_summary(conversation_id, response.content)
