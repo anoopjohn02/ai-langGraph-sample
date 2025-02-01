@@ -27,15 +27,19 @@ Once you have run the application go to [http://localhost:8080/ui](http://localh
 * Clone the repository
 * Create .env file at root and add the following
 
-| name                   | value                                                          | 
-|------------------------|----------------------------------------------------------------|
-| DB_CONNECTION_URL      | postgresql+psycopg2://postgres:postgres@localhost:5432/test_db | 
-| DB_SCHEMA              | ai_assistant                                                   | 
-| KEYCLOAK_AUTH_URL      |                                                                | 
-| OPENAI_API_KEY         |                                                                | 
-| OPEN_AI_MODEL          | gpt-3.5-turbo                                                  | 
-| CHROMA_COLLECTION      | ai_collection                                                  | 
-| EUREKA_URL             | <Disabled for time being>                                      | 
+| name              | possible values                                                | 
+|-------------------|----------------------------------------------------------------|
+| DB_CONNECTION_URL | postgresql+psycopg2://postgres:postgres@localhost:5432/test_db | 
+| DB_SCHEMA         | ai_assistant                                                   | 
+| KEYCLOAK_AUTH_URL |                                                                | 
+| OPENAI_API_KEY    |                                                                | 
+| DEEPSEEK_API_KEY  | <empty if it is not available>                                 |
+| OPEN_AI_MODEL     | gpt-4o, gpt-4o-mini                                            | 
+| DEEP_SEEK_MODEL   | deepseek-chat, deepseek/deepseek-r1:free                       |
+| OLLAMA_MODEL      | llama3.2, deepseek-r1, deepseek-coder-v2                       |
+| MODEL_TYPE        | openai, deepseek, ollama                                       |
+| CHROMA_COLLECTION | ai_collection                                                  | 
+| EUREKA_URL        | <Disabled for time being>                                      | 
 
 ## How do I set up locally? ##
 

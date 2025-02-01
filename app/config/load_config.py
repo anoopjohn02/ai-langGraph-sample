@@ -45,6 +45,12 @@ class OllamaConfig:
     """
     MODEL_NAME = os.getenv('OLLAMA_MODEL')
 
+class DeepSeekConfig:
+    """
+    Store Deepseek specific configurations
+    """
+    MODEL_NAME = os.getenv('DEEP_SEEK_MODEL')
+
 class ChromaConfig:
     """
     Store chroma DB specific configurations

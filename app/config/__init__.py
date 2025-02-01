@@ -7,6 +7,7 @@ from .load_config import (App,
                           Db,
                           OpenaiConfig,
                           OllamaConfig,
+                          DeepSeekConfig,
                           ChromaConfig,
                           PDF_DIRECTORY,
                           METADATA_FILE)
