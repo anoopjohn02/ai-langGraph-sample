@@ -22,7 +22,7 @@ def start():
     api.include_router(TokenUsageController.create_router())
     api.include_router(TestController.create_router())
     api.include_router(UIController.create_router())
-    uvicorn.run(api, host="0.0.0.0", port=8080)
+    uvicorn.run(api, host="0.0.0.0", port=8081)
 
 class UIController(Controller):
     """

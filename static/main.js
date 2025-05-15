@@ -1,6 +1,6 @@
 // Icons made by Freepik from www.flaticon.com
-const BOT_IMG = "http://localhost:8080/static/robot.jpg";
-const PERSON_IMG = "http://localhost:8080/static/man.png";
+const BOT_IMG = "http://localhost:8081/static/robot.jpg";
+const PERSON_IMG = "http://localhost:8081/static/man.png";
 const BOT_NAME = "BOT";
 const PERSON_NAME = "Anoop";
 new_chat = true;
@@ -48,7 +48,7 @@ function botResponse(msgText) {
     new_chat: new_chat
   };
   var messageId = appendMessage(BOT_NAME, BOT_IMG, "left", "");
-  processStreamingResponse('http://localhost:8080/v1/test/stream', messageId, chatMessage)
+  processStreamingResponse('http://localhost:8081/v1/test/stream', messageId, chatMessage)
 }
 
 // Utils
